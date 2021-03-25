@@ -1,0 +1,56 @@
+﻿using System;
+
+namespace RefVsOut
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int first = 1;
+            int second = 2;
+            // antakse muutujatele väärtused
+
+            Method1(out first, out second) ;
+            Method2(first, ref second);
+            Method3(ref first, second);
+            // kutsutakse meetodid välja. out märksõna kasutatakse juhul, kui kutsutud meetod peab värskendama
+            // mitut läbitud parameetrit. ref märksõna kasutatakse andmete edastamiseks kahesuunalisel viisil. 
+
+            Console.WriteLine($"first: {first}, second: {second}");
+            Console.ReadLine();
+
+
+        }
+        //Ref- väärtust muudetakse
+        //Out- väärtust uuendatakse
+        //lihtsalt int- väärtus uueneb ainult meetodi sees
+
+        static void Method1(out int a, out int b)
+        {
+            a = 2;
+            b = 1;
+            //kuna int ees on out, siis First väärtus uuendatakse 2ks, second väärtus uuendatakse 1ks
+
+        }
+
+
+        static void Method2(int a, ref int b)
+        {
+            a *= 5;
+            b *= a;
+            //first väärtuseks antakse ajutiselt meetodi sees 2*5=10, second väärtus muudetakse tänu sellele 1*10=10ks,
+            //kuid first väärtuseks jääb hiljem ikkagi 2
+
+        }
+
+        static void Method3(ref int a, int b)
+        {
+            a *= 5;
+            b *= b;
+
+            //a ehk first väärtus muudetakse 2*5=10, b second väärtus oli 1. seega vastus on 10
+           
+
+        }
+    }
+}
